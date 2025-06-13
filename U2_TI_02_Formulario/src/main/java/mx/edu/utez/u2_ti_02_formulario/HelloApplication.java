@@ -25,32 +25,27 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setPadding(new Insets(10));
-        grid.setHgap(10);
-        grid.setVgap(10);
-
-        Label label = new Label("Nombre");
+        
+        Label lbNombre = new Label("Nombre");
         TextField tfnombre = new TextField();
 
-        Label label2 = new Label("Apellido");
+        Label lbApellido = new Label("Apellido");
         TextField tfapellido = new TextField();
 
 
-        Label label3 = new Label("Edad");
+        Label lbEdad = new Label("Edad");
         TextField tfedad = new TextField();
 
-        Label label4 = new Label("Rol");
+        Label lbRol = new Label("Rol");
         ObservableList<String> rol = FXCollections.observableArrayList("estudiante", "profesor", "admin");
-        ComboBox<String> cbrol = new ComboBox<>(rol);
+        ComboBox<String> cbrol = new ComboBox<>(Rol);
 
-        Button crear = new Button("Crear");
-        Button reset = new Button("Reset");
+        Button btncrear = new Button("Crear");
+        Button btnreset = new Button("Reset");
 
-        Label label5 = new Label("Resultado");
+        Label lbresultado = new Label("Resultado");
 
-        crear.setOnAction( e->{
+        btncrear.setOnAction( e->{
             String nombre = tfnombre.getText();
             String apellido = tfapellido.getText();
             String edad = tfedad.getText();
@@ -58,28 +53,37 @@ public class HelloApplication extends Application {
             if (nombre.isEmpty() || apellido.isEmpty() || edad.isEmpty() || rols.isEmpty()) {
                 label5.setText("Debe llenar todos los campos");
             }else{
-                grid.setStyle("-fx-background-color: green");
-                label5.setStyle("-fx-background-color: ligthblue;");
+                root.setStyle("-fx-background-color: green");
+                lbresultado.setStyle("-fx-background-color: ligthblue; -fx-padding: 10px");
+                lbresultado.setText("Nombre:"+nombre+ "Apellido:"+apellido+ "Edad:"+edad+ "Rol"+rol);
             }
         });
 
-        reset.setOnAction( e->{
+        btnreset.setOnAction( e->{
             tfedad.clear();
             tfapellido.clear();
             tfnombre.clear();
-            cbrol.getSelectionModel().clearSelection();
+            cbrol.setValue(null);
+            lbresultado.setStyle("");
+            lbresultado.setText("");
         });
 
-        grid.add(label, 0, 0);
-        grid.add(tfnombre, 1, 0);
-        grid.add(label2, 0, 1);
-        grid.add(tfapellido, 1, 1);
-        grid.add(label3, 0, 2);
-        grid.add(tfedad, 1, 2);
+        root.add(lbNombre, 0, 0);
+        root.add(tfnombre, 1, 0);
+        root.add(lbApellido, 0, 1);
+        root.add(tfapellido, 1, 1);
+        root.add(lbEdad, 0, 2);
+        root.add(tfedad, 1, 2);
+        root.add(lbrol, 0, 3);
+        root.add(cbrol, 1, 3);
+        root.add(btncrear, 0, 4);
+        root.add(btnreset, 1, 4);
+        root.add(lbresultado, 0, 5);
 
-
-
-
+        Scene scene = new Scene(root, 600, 540);
+        stage.setTitle("Formulario");
+        stage.setScene(scene);
+        stage.show();
 
     }
 
